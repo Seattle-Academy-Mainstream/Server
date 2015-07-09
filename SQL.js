@@ -14,7 +14,9 @@ var Database = mysql.createConnection({
 
 Database.connect();
 
-function AddPost(DataObject, Callback)
+var exports = module.exports = {};
+
+exports.AddPost = function(DataObject, Callback)
 {
   //add the data to mysql
   Database.query('INSERT INTO posts SET ?', DataObject, function(err, result) 
@@ -27,7 +29,7 @@ function AddPost(DataObject, Callback)
   });
 }
 
-function ToggleUpvote(ID, Username, Callback)
+exports.ToggleUpvote = function(ID, Username, Callback)
 {
   var UpvoteArray = [];
 
@@ -60,7 +62,7 @@ function ToggleUpvote(ID, Username, Callback)
   });
 }
 
-function ClearUpvotes(ID, Callback)
+exports.ClearUpvotes = function(ID, Callback)
 {
   Database.query('DELETE FROM upvotes WHERE ID = ?', ID, function (err, result) 
   {
@@ -68,7 +70,7 @@ function ClearUpvotes(ID, Callback)
   }); 
 }
 
-function PostToJSON(ID, Callback)
+exports.PostToJSON = function(ID, Callback)
 {
   Database.query('SELECT * FROM posts WHERE id = ?', ID, function(err, Post) 
   {
@@ -88,7 +90,7 @@ function PostToJSON(ID, Callback)
   });
 }
 
-function ToJSON(Callback)
+exports.ToJSON = function(Callback)
 {
   Database.query('SELECT * FROM posts', function(err, results) 
   {
@@ -115,6 +117,3 @@ function ToJSON(Callback)
   });
  });
 }
-
-
-
