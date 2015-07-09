@@ -4,22 +4,7 @@ var http = require('http');
 var app = express();
 var fs = require('fs');
 var settings = require('./settings.json');
-
-//these are the globals
-var Posts = [];
-
-var mysql = require('mysql');
-
-//table names
-//posts, upvotes
-var Database = mysql.createConnection({
-  host     : settings.host,
-  user     : settings.user,
-  password : settings.password, 
-  database : "mainstream"
-});
-
-PostsTable.connect();
+var SQL = require('./SQL.js');
 
 //sets up the express.js server
 app.use(express.static("/var/local/mainstreamd/"));
@@ -32,44 +17,6 @@ var io = require('socket.io').listen(server);
 io.set('log level', 1);
 
 
-function IndexFromID(ID)
-{
-  for (var i = 0; i < Posts.length; i++)
-  {
-    if(ID == Posts[i]["ID"])
-    {
-      return i;
-    }
-  }
-  return -1;
-}
-
-function SQL_AddPost(DataObject, Callback)
-{
-  //add the data to mysql
-    PostsTable.query('INSERT INTO posts SET ?', DataObject, function(err, result) 
-    {
-      Callback();
-    });
-}
-
-function SQL_ToJSON()
-{
-  var Posts = [];
-
-    connection.query('SELECT * FROM posts', function(err, results) 
-    {
-      for (var i = 0; i < results.length; i++)
-      {
-        connection.query('SELECT * FROM upvotes WHERE id = ?', results[i]["ID"], function(err, results) {
-
-        });
-      }
-    });
-
-  return Posts;
-}
-
 //once the connection is established
 io.sockets.on('connection', function (socket) 
 {
@@ -79,8 +26,11 @@ io.sockets.on('connection', function (socket)
     //write the data
     console.log("A User Asked for all the Data.");
 
-    //send most recent update out to client
-    socket.emit('initial', JSON.stringify(Posts));
+    //send all data to client
+    SQL.ToJSON(function(data)
+    {
+      socket.emit('initial', JSON.stringify(data));
+    });
   });
 
   //when an image is recieved, write it to disk
@@ -99,16 +49,13 @@ io.sockets.on('connection', function (socket)
   });
 
   //on update connection
+  //this function can change anything about a post except upvotes
   socket.on('update', function (data)
   {
     //add parse the JSON string
     var DataObject = JSON.parse(data);
 
-    //need to get rid of the data object because it belongs in a different table
-    var Upvotes = JSON.parse(JSON.stringify(DataObject["Upvotes"]));
-    delete DataObject["Upvotes"];
-
-    SQL_AddPost(DataObject, function()
+    SQL.AddPost(DataObject, function()
     {
       //send most recent update out to client
       io.sockets.emit('update', JSON.stringify(DataObject));
@@ -121,26 +68,15 @@ io.sockets.on('connection', function (socket)
     //parse it
     var DataObject = JSON.parse(data);
 
-    var PostIndex = IndexFromID(DataObject["ID"]);
+    var ID = IndexFromID(DataObject["ID"]);
+    var Username = DataObject["User"];
 
-    //if the upvote already exists, remove it
-    if(Posts[PostIndex]["Upvotes"].indexOf(DataObject["User"]) >= 0)
+    SQL.ToggleUpvote(ID, Username, function()
     {
-      console.log("Removing Upvote")
-      Posts[PostIndex]["Upvotes"].pop(Posts[PostIndex]["Upvotes"].indexOf(DataObject["User"]));
-    }
-
-    //if it doesn't exits, add it
-    else
-    {
-      console.log("Adding Upvote")
-      Posts[PostIndex]["Upvotes"].push(DataObject["User"]);
-    }
-
-    //update the users
-    io.sockets.emit('update', JSON.stringify(Posts[PostIndex]));
-
-    //add data to array
-    console.log("A User Voted on Something; Sending Out Updates to all Users.");
+      //add data to array
+      console.log("A User Voted on Something; Sending Out Updates to all Users.");
+      //update the users
+      io.sockets.emit('update', JSON.stringify(Posts[PostIndex]));
+    });
   });
 });
