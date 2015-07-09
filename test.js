@@ -1,3 +1,5 @@
+#!/usr/bin/node
+
 //sets up includes
 var http = require('http');
 var fs = require('fs');
@@ -36,8 +38,8 @@ function SQL_ToJSON()
     {
       for (var i = 0; i < results.length; i++)
       {
-        connection.query('SELECT * FROM upvotes WHERE id = ?', results[i]["ID"], function(err, results) {
-
+        connection.query('SELECT * FROM upvotes WHERE id = ?', results[i]["ID"], function(err, UpvoteUsers) {
+          results[i]["Upvotes"] = UpvoteUsers;
         });
       }
     });
