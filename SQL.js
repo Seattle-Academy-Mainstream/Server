@@ -84,7 +84,6 @@ function PostToJSON(ID, Callback)
 
       Post["Upvotes"] = UpvoteArray;
       Callback(Post);
-      });
     });
   });
 }
