@@ -45,5 +45,5 @@ function SQL_ToJSON()
   return Posts;
 }
 
-SQL_AddPost({"Category": "Sports", "Content": "Hello World",, "Author": "me@isaaczinda.com", "ID": "0123456789"});
+SQL_AddPost({"Category": "Sports", "Content": "Hello World", "Author": "me@isaaczinda.com", "ID": "0123456789"});
 JSON.parse(SQL_ToJSON());
