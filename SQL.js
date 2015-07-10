@@ -74,7 +74,8 @@ exports.PostToJSON = function(ID, Callback)
 {
   Database.query('SELECT * FROM posts WHERE id = ?', ID, function(err, Post) 
   {
-
+    Post = Post[0];
+    
     Database.query('SELECT * FROM upvotes WHERE id = ?', ID, function(err, UpvoteUsers) 
     {
       //store all of users who upvotes in the upvote array
