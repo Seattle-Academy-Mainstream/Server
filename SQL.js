@@ -23,7 +23,10 @@ exports.AddPost = function(DataObject, Callback)
   // var UpvotesArray = JSON.parse(JSON.stringify(DataObject["Upvotes"]));
   // delete DataObject["Upvotes"];
 
-
+  if(DataObject.hasOwnProperty("Upvotes"))
+  {
+    delete DataObject["Upvotes"];
+  }
 
   //add the data to mysql
   Database.query('INSERT INTO posts SET ?', DataObject, function(err, result) 
