@@ -70,13 +70,17 @@ io.sockets.on('connection', function (socket)
   {
     //parse it
     var DataObject = JSON.parse(data);
-    
+
     SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
     {
       //add data to array
       console.log("A User Voted on Something; Sending Out Updates to all Users.");
       //update the users
-      io.sockets.emit('update', JSON.stringify(Posts[PostIndex]));
+      SQL.PostToJSON(DataObject["ID"], function(Post)
+      {
+        //send most recent update out to client
+        io.sockets.emit('update', JSON.stringify(Post));
+      });
     });
   });
 });
