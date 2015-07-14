@@ -55,10 +55,13 @@ io.sockets.on('connection', function (socket)
     //add parse the JSON string
     var DataObject = JSON.parse(data);
 
-    SQL.AddPost(DataObject, function()
+    SQL.AddPost(DataObject, function(Post)
     {
-      //send most recent update out to client
-      io.sockets.emit('update', JSON.stringify(DataObject));
+      SQL.PostToJSON(DataObject["ID"], function(Post)
+      {
+        //send most recent update out to client
+        io.sockets.emit('update', JSON.stringify(Post));
+      });
     });
   });
 
