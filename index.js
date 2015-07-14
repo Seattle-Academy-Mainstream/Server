@@ -70,11 +70,8 @@ io.sockets.on('connection', function (socket)
   {
     //parse it
     var DataObject = JSON.parse(data);
-
-    var ID = IndexFromID(DataObject["ID"]);
-    var Username = DataObject["User"];
-
-    SQL.ToggleUpvote(ID, Username, function()
+    
+    SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
     {
       //add data to array
       console.log("A User Voted on Something; Sending Out Updates to all Users.");
