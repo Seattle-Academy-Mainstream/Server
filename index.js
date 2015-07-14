@@ -1,3 +1,5 @@
+#! /usr/bin/node
+
 //sets up includes
 var express = require('express')
 var http = require('http');
@@ -5,6 +7,19 @@ var app = express();
 var fs = require('fs');
 var settings = require('./settings.json');
 var SQL = require('./SQL.js');
+var fs = require('fs');
+
+//program header that sets up the pid
+fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
+  function(err) 
+  {
+    if (err) throw err;
+  }
+);
+
+process.setgid('mainstreamd');
+process.setuid('mainstreamd');
+
 
 //sets up the express.js server
 app.use(express.static("/var/local/mainstreamd/"));
