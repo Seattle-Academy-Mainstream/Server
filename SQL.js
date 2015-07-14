@@ -18,6 +18,13 @@ var exports = module.exports = {};
 
 exports.AddPost = function(DataObject, Callback)
 {
+  console.log(DataObject);
+
+  // var UpvotesArray = JSON.parse(JSON.stringify(DataObject["Upvotes"]));
+  // delete DataObject["Upvotes"];
+
+
+
   //add the data to mysql
   Database.query('INSERT INTO posts SET ?', DataObject, function(err, result) 
   {
