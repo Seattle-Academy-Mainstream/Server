@@ -36,7 +36,7 @@ io.set('log level', 1);
 io.sockets.on('connection', function (socket) 
 {
   //the initial request
-  socket.on('initial', function (data)
+  socket.on('update', function (data)
   {
     //write the data
     console.log("A User Asked for all the Data.");
@@ -44,7 +44,7 @@ io.sockets.on('connection', function (socket)
     //send all data to client
     SQL.ToJSON(function(data)
     {
-      socket.emit('initial', JSON.stringify(data));
+      socket.emit('update', JSON.stringify(data));
     });
   });
 
@@ -65,18 +65,19 @@ io.sockets.on('connection', function (socket)
 
   //on update connection
   //this function can change anything about a post except upvotes
-  socket.on('update', function (data)
+  socket.on('addpost', function (data)
   {
     //add parse the JSON string
     var DataObject = JSON.parse(data);
 
     SQL.AddPost(DataObject, function(Post)
     {
-      SQL.PostToJSON(DataObject["ID"], function(Post)
-      {
+      console.log("A user added a post.");
+      //SQL.PostToJSON(DataObject["ID"], function(Post)
+      //{
         //send most recent update out to client
-        io.sockets.emit('update', JSON.stringify(Post));
-      });
+        //io.sockets.emit('update', JSON.stringify(Post));
+      //});
     });
   });
 
@@ -89,13 +90,13 @@ io.sockets.on('connection', function (socket)
     SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
     {
       //add data to array
-      console.log("A User Voted on Something; Sending Out Updates to all Users.");
+      console.log("A User Voted on Something.");
       //update the users
-      SQL.PostToJSON(DataObject["ID"], function(Post)
-      {
+      //SQL.PostToJSON(DataObject["ID"], function(Post)
+      //{
         //send most recent update out to client
-        io.sockets.emit('update', JSON.stringify(Post));
-      });
+        //io.sockets.emit('update', JSON.stringify(Post));
+      //});
     });
   });
 });
