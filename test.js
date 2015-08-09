@@ -1,5 +1,4 @@
-var SQL = require("./SQL.js"); 
-
+var SQL = require("./SQL.js");  
 
 SQL.PostToJSON("0123456789", function(data)
 {
