@@ -10,15 +10,15 @@ var SQL = require('./SQL.js');
 var fs = require('fs');
 
 //program header that sets up the pid
-fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
-  function(err) 
-  {
-    if (err) throw err;
-  }
-);
+//fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
+//  function(err) 
+//  {
+//    if (err) throw err;
+//  }
+//);
 
-process.setgid('mainstreamd');
-process.setuid('mainstreamd');
+//process.setgid('mainstreamd');
+//process.setuid('mainstreamd');
 
 
 //sets up the express.js server
@@ -92,11 +92,11 @@ io.sockets.on('connection', function (socket)
       //add data to array
       console.log("A User Voted on Something.");
       //update the users
-      //SQL.PostToJSON(DataObject["ID"], function(Post)
-      //{
-        //send most recent update out to client
-        //io.sockets.emit('update', JSON.stringify(Post));
-      //});
+
+      SQL.ToJSON(function(data)
+      {
+        socket.emit('updateupvotes', JSON.stringify(data));
+      });
     });
   });
 });
