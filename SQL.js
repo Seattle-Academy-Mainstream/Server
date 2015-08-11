@@ -65,7 +65,7 @@ exports.ToggleUpvote = function(ID, Username, Callback)
     }
     else
     {
-      Database.query('DELETE FROM upvotes WHERE Author = ?', Username, function (err, result) {
+      Database.query('DELETE FROM upvotes WHERE Author = ? AND id = ?', Username, ID, function (err, result) {
         Callback();
       });	
     }
