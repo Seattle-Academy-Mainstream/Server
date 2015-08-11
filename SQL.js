@@ -54,7 +54,7 @@ exports.ToggleUpvote = function(ID, Username, Callback)
     console.log(UpvoteArray);
     if(UpvoteArray.indexOf(Username) == -1)
     {
-      Database.query('INSERT INTO upvotes SET ?', {"ID": ID, "Author": Username}, function(err, result)
+      Database.query('INSERT INTO upvotes SET ?', {"id": ID, "Author": Username}, function(err, result)
       {
         if(err)
         {
@@ -65,7 +65,7 @@ exports.ToggleUpvote = function(ID, Username, Callback)
     }
     else
     {
-      Database.query('DELETE FROM upvotes WHERE Author = ? AND id = ?', Username, ID, function (err, result) {
+      Database.query("DELETE FROM upvotes WHERE Author = '" + Username + "' AND id = '" + ID + "'", function (err, result) {
         Callback();
       });	
     }
