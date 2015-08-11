@@ -92,11 +92,11 @@ io.sockets.on('connection', function (socket)
       //add data to array
       console.log("A User Voted on Something.");
       //update the users
-      //SQL.PostToJSON(DataObject["ID"], function(Post)
-      //{
-        //send most recent update out to client
-        //io.sockets.emit('update', JSON.stringify(Post));
-      //});
+
+      SQL.ToJSON(function(data)
+      {
+        socket.emit('updateupvotes', JSON.stringify(data));
+      });
     });
   });
 });
