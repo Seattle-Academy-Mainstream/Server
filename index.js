@@ -57,6 +57,8 @@ io.sockets.on('connection', function (socket)
 
     console.log("Recieved Image with Length " + buffer.length);
 
+    console.log(buffer)
+
     fs.open("/var/local/mainstreamd/Images/" + ParsedData["Name"], 'w+', function(err, fd)
     {
       fs.write(fd, buffer, 0, buffer.length, 0, function(err) {});
