@@ -31,7 +31,7 @@ exports.AddPost = function(DataObject, Callback)
   //add the data to mysql
   Database.query('INSERT INTO posts SET ' + JSON.stringify(DataObject), function(err, result) 
   {
-    console.log("InsertID: " + result.insertId);
+    //console.log("InsertID: " + result.insertId);
 
     if(err)
     {
