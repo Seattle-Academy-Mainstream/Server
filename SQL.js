@@ -42,7 +42,7 @@ exports.AddPost = function(DataObject, Callback)
     Database.query('SELECT * FROM posts', function(err, results) 
     {
       console.log(JSON.stringify(results));
-    }
+    });
   });
 }
 
