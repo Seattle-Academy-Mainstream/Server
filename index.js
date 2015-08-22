@@ -57,13 +57,11 @@ io.sockets.on('connection', function (socket)
 
     console.log("Recieved Image with Length " + buffer.length);
 
-    console.log(buffer)
+    console.log(ParsedData)
 
-    fs.open("/var/local/mainstreamd/Images/" + ParsedData["Name"], 'w+', function(err, fd)
-    {
-      fs.write(fd, buffer, 0, buffer.length, 0, function(err) {});
+    fs.writeFile("/var/local/mainstreamd/Images/" + ParsedData["Name"], buffer, function(err) {
+      console.log(err);
     });
-  });
 
   //on update connection
   //this function can change anything about a post except upvotes
