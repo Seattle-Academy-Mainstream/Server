@@ -26,7 +26,7 @@ exports.AddPost = function(DataObject, Callback)
     delete DataObject["Upvotes"];
   }
 
-  FormattedObject = {Image: DataObject["Image"], Content: DataObject["Content"], Author: DataObject["Author"], ID: DataObject["ID"], Category: DataObject["Category"]);
+  FormattedObject = {Image: DataObject["Image"], Content: DataObject["Content"], Author: DataObject["Author"], ID: DataObject["ID"], Category: DataObject["Category"]};
 
 
   //add the data to mysql
