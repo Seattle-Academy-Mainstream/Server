@@ -26,14 +26,15 @@ exports.AddPost = function(DataObject, Callback)
     delete DataObject["Upvotes"];
   }
 
+  console.log(JSON.stringify(DataObject));
+
   //add the data to mysql
-  Database.query('INSERT INTO posts SET ?', DataObject, function(err, result) 
+  Database.query('INSERT INTO posts SET ' + JSON.stringify(DataObject), function(err, result) 
   {
-    console.log(result.insertId);
+    console.log("InsertID: " + result.insertId);
 
     if(err)
     {
-      console.log("this");
       console.log(err);
     }
     Callback();
