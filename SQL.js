@@ -18,8 +18,6 @@ var exports = module.exports = {};
 
 exports.AddPost = function(DataObject, Callback)
 {
-  console.log(DataObject);
-
   // var UpvotesArray = JSON.parse(JSON.stringify(DataObject["Upvotes"]));
   // delete DataObject["Upvotes"];
 
@@ -51,7 +49,6 @@ exports.ToggleUpvote = function(ID, Username, Callback)
       UpvoteArray.push(UpvoteUsers[p]["Author"]);
     }
 
-    console.log(UpvoteArray);
     if(UpvoteArray.indexOf(Username) == -1)
     {
       Database.query('INSERT INTO upvotes SET ?', {"id": ID, "Author": Username}, function(err, result)
@@ -105,7 +102,6 @@ exports.ToJSON = function(Callback)
 {
   Database.query('SELECT * FROM posts', function(err, results) 
   {
-   console.log(results);
    var timesrun = 0;
    results.forEach(function(i)
    {
@@ -120,8 +116,6 @@ exports.ToJSON = function(Callback)
     timesrun += 1;
     if(timesrun == results.length)
     {
-      console.log(timesrun);
-      console.log(results);
       Callback(results);
     }
   });
