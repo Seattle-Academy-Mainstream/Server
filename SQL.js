@@ -28,7 +28,6 @@ exports.AddPost = function(DataObject, Callback)
 
   FormattedObject = {Image: DataObject["Image"], Content: DataObject["Content"], Author: DataObject["Author"], ID: DataObject["ID"], Category: DataObject["Category"]};
 
-
   //add the data to mysql
   Database.query('INSERT INTO posts SET ?', FormattedObject, function(err, result) 
   {
@@ -39,6 +38,11 @@ exports.AddPost = function(DataObject, Callback)
       console.log(err);
     }
     Callback();
+
+    Database.query('SELECT * FROM posts', function(err, results) 
+    {
+      console.log(JSON.stringify(results));
+    }
   });
 }
 
