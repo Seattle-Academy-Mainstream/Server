@@ -62,6 +62,7 @@ io.sockets.on('connection', function (socket)
     fs.writeFile("/var/local/mainstreamd/Images/" + ParsedData["Name"], buffer, function(err) {
       console.log(err);
     });
+  }
 
   //on update connection
   //this function can change anything about a post except upvotes
