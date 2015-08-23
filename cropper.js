@@ -4,7 +4,6 @@ var ImageObject = {"scale": 1.77777, "angle": 0, "x": 0, "y": 0, "w": 360, "h": 
 
 easyimg.crop({
   src:'testimage.png', dst:'/var/local/mainstreamd/Images/cropped-test.png',
-  width: ImageObject["w"], height: ImageObject["h"],
   cropwidth: (640 / ImageObject["scale"]), cropheight: (480 / ImageObject["scale"]),
   gravity:'North',
   x: (ImageObject["x"] / ImageObject["scale"]), y: (ImageObject["h"] / ImageObject["scale"])
