@@ -1,6 +1,6 @@
 var easyimg = require('easyimage');
 
-var ImageObject = {"scale": 1.77777, "angle": 0, "x": 0, "y": 0, "w": 360, "h": 640};
+var ImageObject = {"scale": 1.77777, "angle": 0, "x": 0, "y": 256, "w": 360, "h": 640};
 
 console.log(ImageObject["x"] / ImageObject["scale"])
 console.log(ImageObject["y"] / ImageObject["scale"])
