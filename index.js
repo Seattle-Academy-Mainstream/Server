@@ -52,7 +52,7 @@ io.sockets.on('connection', function (socket)
   //when an image is recieved, write it to disk
   socket.on('image', function (data, callback)
   {
-    callback({});
+    callback();
 
     var ParsedData = JSON.parse(data);
 
@@ -74,7 +74,7 @@ io.sockets.on('connection', function (socket)
   //this function can change anything about a post except upvotes
   socket.on('addpost', function (data, callback)
   {
-    callback({});
+    callback();
 
     //add parse the JSON string
     var DataObject = JSON.parse(data);
