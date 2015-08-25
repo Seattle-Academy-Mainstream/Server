@@ -7,6 +7,7 @@ var app = express();
 var fs = require('fs');
 var settings = require('./settings.json');
 var SQL = require('./SQL.js');
+var Cropper = require('./cropper.js');
 var fs = require('fs');
 
 //program header that sets up the pid
@@ -57,8 +58,13 @@ io.sockets.on('connection', function (socket)
 
     console.log("Recieved Image with Length " + buffer.length);
 
-    fs.writeFile("/var/local/mainstreamd/Images/" + ParsedData["Name"], buffer, function(err) {
+    fs.writeFile("/var/local/mainstreamd/UnscaledImages/" + ParsedData["Name"], buffer, function(err) {
       console.log(err);
+
+      Cropper.Crop(ParsedData["CroppingData"], ParsedData["Name"], function()
+      {
+        
+      });
     });
   });
 
