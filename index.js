@@ -58,12 +58,12 @@ io.sockets.on('connection', function (socket)
 
     console.log("Recieved Image with Length " + buffer.length);
 
-    fs.writeFile("/var/local/mainstreamd/UnscaledImages/" + ParsedData["Name"], buffer, function(err) {
+    fs.writeFile("/var/local/mainstreamd/RawImages/" + ParsedData["Name"], buffer, function(err) {
       console.log(err);
 
       Cropper.Crop(ParsedData["CroppingData"], ParsedData["Name"], function()
       {
-        
+
       });
     });
   });

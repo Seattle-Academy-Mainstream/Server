@@ -6,8 +6,9 @@ var exports = module.exports = {};
 //{"scale": 1.77777, "angle": 0, "x": 0, "y": 256, "w": 360, "h": 640}
 exports.Crop = function(ImageObject, ImageName, Callback)
 {
+  console.log("Starting Crop.");
   easyimg.crop({
-    src: "/var/local/mainstreamd/UnscaledImages/" + ImageName, dst:"/var/local/mainstreamd/Images/" + ImageName,
+    src: "/var/local/mainstreamd/RawImages/" + ImageName, dst:"/var/local/mainstreamd/Images/" + ImageName,
     cropwidth: (640 / ImageObject["scale"]), cropheight: (480 / ImageObject["scale"]),
     gravity:'North',
     x: (ImageObject["x"] / ImageObject["scale"]), y: (ImageObject["y"] / ImageObject["scale"])
