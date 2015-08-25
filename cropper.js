@@ -6,8 +6,6 @@ var exports = module.exports = {};
 //{"scale": 1.77777, "angle": 0, "x": 0, "y": 256, "w": 360, "h": 640}
 exports.Crop = function(ImageObject, ImageName, Callback)
 {
-  console.log(JSON.stringify(ImageObject));
-
   easyimg.crop({
     src: "/var/local/mainstreamd/RawImages/" + ImageName, dst:"/var/local/mainstreamd/Images/" + ImageName,
     cropwidth: (640 / ImageObject["scale"]), cropheight: (480 / ImageObject["scale"]),
