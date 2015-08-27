@@ -13,7 +13,7 @@ exports.Crop = function(ImageObject, ImageName, Callback)
   //convert flower.jpg -crop 128×128+50+50 flower_crop.jpg
 
   var exec = require('child_process').exec;
-  var Command = "convert " + "/var/local/mainstreamd/RawImages/" + ImageName + " -crop " + Math.floor(640 / ImageObject["scale"]) + "x" + Math.floor(480 / ImageObject["scale"]) + "+" + Math.floor(ImageObject["x"] / ImageObject["scale"]) +"+" + Math.floor(ImageObject["y"] / ImageObject["scale"]) + " /var/local/mainstreamd/Images/" + ImageName;
+  var Command = "convert " + "/var/local/mainstreamd/RawImages/" + ImageName + " -crop " + Math.floor(640 / ImageObject["scale"]) + "x" + Math.floor(480 / ImageObject["scale"]) + "+" + Math.floor(ImageObject["x"] / ImageObject["scale"]) +"+" + Math.floor(ImageObject["y"] / ImageObject["scale"]) + " -auto-orient /var/local/mainstreamd/Images/" + ImageName;
 
   console.log(Command);
 
