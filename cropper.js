@@ -13,15 +13,21 @@ exports.Crop = function(ImageObject, ImageName, Callback)
   //convert flower.jpg -crop 128×128+50+50 flower_crop.jpg
 
   var exec = require('child_process').exec;
-  var Command = "convert " + "/var/local/mainstreamd/RawImages/" + ImageName + " -crop " + Math.floor(640 / ImageObject["scale"]) + "x" + Math.floor(480 / ImageObject["scale"]) + "+" + Math.floor(ImageObject["x"] / ImageObject["scale"]) +"+" + Math.floor(ImageObject["y"] / ImageObject["scale"]) + " -auto-orient /var/local/mainstreamd/Images/" + ImageName;
+  var FirstCommand = "convert /var/local/mainstreamd/RawImages/" + ImageName + " -auto-orient /var/local/mainstreamd/Images/" + ImageName;
 
-  console.log(Command);
+  var SecondCommand = "convert " + "/var/local/mainstreamd/Images/" + ImageName + " -crop " + Math.floor(640 / ImageObject["scale"]) + "x" + Math.floor(480 / ImageObject["scale"]) + "+" + Math.floor(ImageObject["x"] / ImageObject["scale"]) +"+" + Math.floor(ImageObject["y"] / ImageObject["scale"]) + " /var/local/mainstreamd/Images/" + ImageName;
 
-  exec(Command, function(error, stdout, stderr) {
-    console.log(error);
+  console.log(FirstCommand);
+  console.log(SecondCommand);
 
-    Callback();
+  exec(FirstCommand, function(error, stdout, stderr) {
+     exec(SecondCommand, function(error2, stdout2, stderr2) {
+      console.log(error2);
+
+      Callback();
+    });
   });
+ 
 
   // easyimg.crop({
   //   src: "/var/local/mainstreamd/RawImages/" + ImageName, dst:"/var/local/mainstreamd/Images/" + ImageName,
