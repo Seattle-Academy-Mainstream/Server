@@ -9,18 +9,30 @@ exports.Crop = function(ImageObject, ImageName, Callback)
   console.log("CropSize = " + 640 / ImageObject["scale"] + "x" + 480 / ImageObject["scale"]);
   console.log("CropStart = " + ImageObject["x"] / ImageObject["scale"] + ", " + ImageObject["y"] / ImageObject["scale"]);
 
-  easyimg.crop({
-    src: "/var/local/mainstreamd/RawImages/" + ImageName, dst:"/var/local/mainstreamd/Images/" + ImageName,
-    cropwidth: (640 / ImageObject["scale"]), cropheight: (480 / ImageObject["scale"]),
-    gravity:'North',
-    x: (ImageObject["x"] / ImageObject["scale"]), y: (ImageObject["y"] / ImageObject["scale"])
-  }).then(
-  function(image) 
-  {
-     console.log("Resized and Cropped Image.");
-  },
-  function (err) 
-  {
-    console.log(err);
+  //the example:
+  //convert flower.jpg -crop 128×128+50+50 flower_crop.jpg
+
+  var exec = require('child_process').exec;
+  var Command = "convert " + "/var/local/mainstreamd/RawImages/" + ImageName + " -crop " + 640 / ImageObject["scale"] + "×" + 480 / ImageObject["scale"] + "+" + ImageObject["x"] / ImageObject["scale"] +"+" + ImageObject["y"] / ImageObject["scale"] + " /var/local/mainstreamd/Images/" + ImageName;
+
+  console.log(Command);
+
+  exec(Command, function(error, stdout, stderr) {
+    Callback();
   });
+
+  // easyimg.crop({
+  //   src: "/var/local/mainstreamd/RawImages/" + ImageName, dst:"/var/local/mainstreamd/Images/" + ImageName,
+  //   cropwidth: (640 / ImageObject["scale"]), cropheight: (480 / ImageObject["scale"]),
+  //   gravity:'North',
+  //   x: (ImageObject["x"] / ImageObject["scale"]), y: (ImageObject["y"] / ImageObject["scale"])
+  // }).then(
+  // function(image) 
+  // {
+  //    console.log("Resized and Cropped Image.");
+  // },
+  // function (err) 
+  // {
+  //   console.log(err);
+  // });
 }
