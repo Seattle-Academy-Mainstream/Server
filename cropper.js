@@ -18,6 +18,8 @@ exports.Crop = function(ImageObject, ImageName, Callback)
   console.log(Command);
 
   exec(Command, function(error, stdout, stderr) {
+    console.log(error);
+    
     Callback();
   });
 
