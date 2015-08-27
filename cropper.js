@@ -13,14 +13,16 @@ exports.Crop = function(ImageObject, ImageName, Callback)
   //convert flower.jpg -crop 128×128+50+50 flower_crop.jpg
 
   var exec = require('child_process').exec;
-  var FirstCommand = "convert /var/local/mainstreamd/RawImages/" + ImageName + " -auto-orient /var/local/mainstreamd/Images/" + ImageName;
 
+  var FirstCommand = "convert /var/local/mainstreamd/RawImages/" + ImageName + " -auto-orient /var/local/mainstreamd/Images/" + ImageName;
   var SecondCommand = "convert " + "/var/local/mainstreamd/Images/" + ImageName + " -crop " + Math.floor(640 / ImageObject["scale"]) + "x" + Math.floor(480 / ImageObject["scale"]) + "+" + Math.floor(ImageObject["x"] / ImageObject["scale"]) +"+" + Math.floor(ImageObject["y"] / ImageObject["scale"]) + " /var/local/mainstreamd/Images/" + ImageName;
 
   console.log(FirstCommand);
   console.log(SecondCommand);
 
+  //the first command is to orient the image based on its alleged orientation. This is how it was displayed in the cropper.
   exec(FirstCommand, function(error, stdout, stderr) {
+    //the second command is to crop the image.
      exec(SecondCommand, function(error2, stdout2, stderr2) {
       console.log(error2);
 
