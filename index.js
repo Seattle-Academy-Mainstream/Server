@@ -26,7 +26,8 @@ function TokenToUsername(Token, Callback)
 {
   request("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + Token, function(error, response, body) 
   {
-    Callback(body["email"]);
+    console.log(response["email"]);
+    Callback(response["email"]);
   });
 }
 
