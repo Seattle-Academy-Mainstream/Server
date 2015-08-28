@@ -35,8 +35,10 @@ function TokenToUsername(Token, Callback)
 app.use(express.static("/var/local/mainstreamd/"));
 var server = app.listen(10000);
 
+var socketserver = app.listen(11000);
+
 //sets up socket.io with the express server
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(socketserver);
 
 //reduce the log level
 io.set('log level', 1);
