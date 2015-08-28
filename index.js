@@ -9,6 +9,7 @@ var settings = require('./settings.json');
 var SQL = require('./SQL.js');
 var Cropper = require('./cropper.js');
 var fs = require('fs');
+var request = require('request');
 
 //program header that sets up the pid
 //fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
@@ -20,6 +21,14 @@ var fs = require('fs');
 
 //process.setgid('mainstreamd');
 //process.setuid('mainstreamd');
+
+function TokenToUsername(Token, Callback)
+{
+  request("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + Token, function(error, response, body) 
+  {
+    Callback(body["email"]);
+  });
+}
 
 
 //sets up the express.js server
@@ -36,6 +45,10 @@ io.set('log level', 1);
 //once the connection is established
 io.sockets.on('connection', function (socket) 
 {
+  TokenToUsername("eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc1OGJlMzY5ZjJhNzM5YjQ2ODcxZmMxOGY3ZmQ3ODMxMjcyZDQ4NWMifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6IlJPbW8zU1plQ1luN2FzVGoydEJqcUEiLCJhdWQiOiI1MzMzMzIzODA5MjEtN204ZW9pNDk2OGt2bDFtbXIwa2szY2xjbzI1bG9lbWcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDY0Njg1NDMwMTQ1ODg1NTQyNzUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTMzMzMyMzgwOTIxLTdtOGVvaTQ5NjhrdmwxbW1yMGtrM2NsY28yNWxvZW1nLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiaGQiOiJzZWF0dGxlYWNhZGVteS5vcmciLCJlbWFpbCI6ImlzYWFjemluZGFAc2VhdHRsZWFjYWRlbXkub3JnIiwiaWF0IjoxNDQwNzI0MTY5LCJleHAiOjE0NDA3Mjc3NjksIm5hbWUiOiJJc2FhYyBaaW5kYSIsImdpdmVuX25hbWUiOiJJc2FhYyIsImZhbWlseV9uYW1lIjoiWmluZGEiLCJsb2NhbGUiOiJlbiJ9.raXoS1nGtI_RDz7--tQZjIA5V0F_xns-kMKZm5Cm0EV0bx9JgoYQjhveT1BMz3u3T0obJT8Io_zyrLsHKwLu_gHnYJbYMkXI51kFKMU_iendIZZt60G-ul_Vb2WQDh4-sH-W6MiD9-6gJrmTZICftiUm0oEJ629N0qNMYHXLsTBpkJ8hs0irm_CZKMGj3dQFMNcbUBBXzOo2lvHS9GXXsqX0aGggWGIQO8rlt34Y5R1IFKRJ8MIV3YGyY7lVFAVl2-GuD7GefzVy0m8bgI_gOjT3pmjFDSD-jBOPHwp8TT8uZ9WdH4KCRm-IX2OEv1jtrzlNMHSYu8oIHJT82VpxFg", function(Data){
+    console.log(Data);
+  });
+  
   //the initial request
   socket.on('update', function (data)
   {
