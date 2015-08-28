@@ -44,11 +44,7 @@ io.set('log level', 1);
 
 //once the connection is established
 io.sockets.on('connection', function (socket) 
-{
-  TokenToUsername("eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc1OGJlMzY5ZjJhNzM5YjQ2ODcxZmMxOGY3ZmQ3ODMxMjcyZDQ4NWMifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6IlJPbW8zU1plQ1luN2FzVGoydEJqcUEiLCJhdWQiOiI1MzMzMzIzODA5MjEtN204ZW9pNDk2OGt2bDFtbXIwa2szY2xjbzI1bG9lbWcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDY0Njg1NDMwMTQ1ODg1NTQyNzUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTMzMzMyMzgwOTIxLTdtOGVvaTQ5NjhrdmwxbW1yMGtrM2NsY28yNWxvZW1nLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiaGQiOiJzZWF0dGxlYWNhZGVteS5vcmciLCJlbWFpbCI6ImlzYWFjemluZGFAc2VhdHRsZWFjYWRlbXkub3JnIiwiaWF0IjoxNDQwNzI0MTY5LCJleHAiOjE0NDA3Mjc3NjksIm5hbWUiOiJJc2FhYyBaaW5kYSIsImdpdmVuX25hbWUiOiJJc2FhYyIsImZhbWlseV9uYW1lIjoiWmluZGEiLCJsb2NhbGUiOiJlbiJ9.raXoS1nGtI_RDz7--tQZjIA5V0F_xns-kMKZm5Cm0EV0bx9JgoYQjhveT1BMz3u3T0obJT8Io_zyrLsHKwLu_gHnYJbYMkXI51kFKMU_iendIZZt60G-ul_Vb2WQDh4-sH-W6MiD9-6gJrmTZICftiUm0oEJ629N0qNMYHXLsTBpkJ8hs0irm_CZKMGj3dQFMNcbUBBXzOo2lvHS9GXXsqX0aGggWGIQO8rlt34Y5R1IFKRJ8MIV3YGyY7lVFAVl2-GuD7GefzVy0m8bgI_gOjT3pmjFDSD-jBOPHwp8TT8uZ9WdH4KCRm-IX2OEv1jtrzlNMHSYu8oIHJT82VpxFg", function(Data){
-    console.log(Data);
-  });
-  
+{  
   //the initial request
   socket.on('update', function (data)
   {
@@ -92,14 +88,21 @@ io.sockets.on('connection', function (socket)
     //add parse the JSON string
     var DataObject = JSON.parse(data);
 
-    SQL.AddPost(DataObject, function(Post)
+    TokenToUsername(DataObject["Author"], function(Data)
     {
-      console.log("A user added a post.");
-      //SQL.PostToJSON(DataObject["ID"], function(Post)
-      //{
-        //send most recent update out to client
-        //io.sockets.emit('update', JSON.stringify(Post));
-      //});
+      DataObject["Author"] = Data;
+
+      if(DataObject["Author"].indexOf("@seattleacademy.org") != -1)
+      {
+        SQL.AddPost(DataObject, function(Post)
+        {
+          console.log("A user added a post.");
+        });
+      }
+      else
+      {
+        console.log("Invalid Username.");
+      }
     });
   });
 
@@ -109,16 +112,28 @@ io.sockets.on('connection', function (socket)
     //parse it
     var DataObject = JSON.parse(data);
 
-    SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
+    TokenToUsername(DataObject["User"], function(Data)
     {
-      //add data to array
-      console.log("A User Voted on Something.");
-      //update the users
+      DataObject["User"] = Data;
 
-      SQL.ToJSON(function(data)
+      if(DataObject["User"].indexOf("@seattleacademy.org") != -1)
       {
-        socket.emit('updateupvotes', JSON.stringify(data));
-      });
+        SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
+        {
+          //add data to array
+          console.log("A User Voted on Something.");
+          //update the users
+
+          SQL.ToJSON(function(data)
+          {
+            socket.emit('updateupvotes', JSON.stringify(data));
+          });
+        });
+      }
+      else
+      {
+        console.log("Invalid Username.");
+      }
     });
   });
 });
