@@ -30,6 +30,19 @@ function TokenToUsername(Token, Callback)
   });
 }
 
+function CurrentSQLTime()
+{
+  var date = new Date();
+  date = date.getUTCFullYear() + '-' +
+      ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+      ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+      ('00' + date.getUTCHours()).slice(-2) + ':' + 
+      ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+      ('00' + date.getUTCSeconds()).slice(-2);
+  console.log(date);
+  return date;
+}
+
 
 //sets up the express.js server
 app.use(express.static("/var/local/mainstreamd/"));
@@ -88,6 +101,9 @@ io.sockets.on('connection', function (socket)
     //add parse the JSON string
     var DataObject = JSON.parse(data);
 
+    //set the time
+    DataObject["Timestamp"] = CurrentSQLTime();
+ 
     TokenToUsername(DataObject["Author"], function(Data)
     {
       DataObject["Author"] = Data;
