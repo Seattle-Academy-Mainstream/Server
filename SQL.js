@@ -45,8 +45,10 @@ exports.DeleteAll = function(Callback)
 {
   Database.query('DELETE * FROM posts', function(err, result) 
   {
-    Database.query('DELETE * FROM upvotes', function(err, result) 
+    console.log(err);
+    Database.query('DELETE * FROM upvotes', function(err2, result2) 
     {
+      console.log(err2);
       Callback();
     });
   });

@@ -96,6 +96,7 @@ io.sockets.on('connection', function (socket)
   {
     SQL.DeleteAll(function(Post)
     {
+      
     });
   });
 
