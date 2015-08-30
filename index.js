@@ -92,6 +92,13 @@ io.sockets.on('connection', function (socket)
     });
   });
 
+  socket.on('deleteall', function ()
+  {
+    SQL.DeleteAll(function(Post)
+    {
+    });
+  });
+
   //on update connection
   //this function can change anything about a post except upvotes
   socket.on('addpost', function (data, callback)

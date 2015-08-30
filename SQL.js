@@ -41,6 +41,17 @@ exports.AddPost = function(DataObject, Callback)
   });
 }
 
+exports.DeleteAll = function(Callback)
+{
+  Database.query('DELETE * FROM posts', function(err, result) 
+  {
+    Database.query('DELETE * FROM upvotes', function(err, result) 
+    {
+      Callback();
+    });
+  });
+}
+
 exports.ToggleUpvote = function(ID, Username, Callback)
 {
   var UpvoteArray = [];
