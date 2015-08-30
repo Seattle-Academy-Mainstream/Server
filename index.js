@@ -67,6 +67,7 @@ io.sockets.on('connection', function (socket)
     //send all data to client
     SQL.ToJSON(function(data)
     {
+      console.log(JSON.stringify(data));
       socket.emit('update', JSON.stringify(data));
     });
   });
@@ -96,7 +97,7 @@ io.sockets.on('connection', function (socket)
   {
     SQL.DeleteAll(function(Post)
     {
-      
+
     });
   });
 
@@ -111,6 +112,8 @@ io.sockets.on('connection', function (socket)
 
     //set the time
     DataObject["Timestamp"] = CurrentSQLTime();
+
+    console.log(JSON.stringify(DataObject));
  
     TokenToUsername(DataObject["Author"], function(Data)
     {
