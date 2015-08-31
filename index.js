@@ -41,12 +41,12 @@ function TokenToUsername(Token, Callback)
 
 function CurrentSQLTime()
 {
-  var date = new Date();
-  date = date.getUTCFullYear() + '-' +
-      ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
-      ('00' + date.getUTCDate()).slice(-2);
-  console.log(date);
-  return date;
+  var currentdate = new Date(); 
+  var Month = currentdate.getMonth() + 1;
+  var Day = currentdate.getDate();
+  var Year = currentdate.getFullYear();
+
+  return Year + "-" + Month + "-" + Day;
 }
 
 
