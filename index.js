@@ -152,7 +152,7 @@ io.sockets.on('connection', function (socket)
   });
 
   //on update connection
-  socket.on('upvote', function (data)
+  socket.on('upvote', function (data, callback)
   {
     //parse it
     var DataObject = JSON.parse(data);
