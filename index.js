@@ -118,8 +118,8 @@ io.sockets.on('connection', function (socket)
 
       console.log(Data);
 
-      //if the token is expired and these was no author
-      if(DataObject.hasOwnProperty("Author") == 0)
+      //if the token is expired and these was an error
+      if(DataObject.hasOwnProperty("error_description"))
       {
         callback("NoToken");
       }
