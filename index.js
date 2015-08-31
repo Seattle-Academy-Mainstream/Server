@@ -134,6 +134,8 @@ io.sockets.on('connection', function (socket)
       //if the author actually exists
       else
       {
+        callback();
+
         if(DataObject["Author"].indexOf("@seattleacademy.org") != -1)
         {
           SQL.AddPost(DataObject, function(Post)
@@ -155,27 +157,39 @@ io.sockets.on('connection', function (socket)
     //parse it
     var DataObject = JSON.parse(data);
 
-    TokenToUsername(DataObject["User"], function(Data)
+    TokenToUsername(DataObject["User"], function(Data, Error)
     {
       DataObject["User"] = Data;
 
-      if(DataObject["User"].indexOf("@seattleacademy.org") != -1)
+      //if the token is expired and these was an error
+      if(Error != null)
       {
-        SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
-        {
-          //add data to array
-          console.log("A User Voted on Something.");
-          //update the users
-
-          SQL.ToJSON(function(data)
-          {
-            socket.emit('updateupvotes', JSON.stringify(data));
-          });
-        });
+        console.log("The token was not valid.")
+        callback("NoToken");
       }
+      //if the author actually exists
       else
       {
-        console.log("Invalid Username.");
+        callback();
+
+        if(DataObject["User"].indexOf("@seattleacademy.org") != -1)
+        {
+          SQL.ToggleUpvote(DataObject["ID"], DataObject["User"], function()
+          {
+            //add data to array
+            console.log("A User Voted on Something.");
+            //update the users
+
+            SQL.ToJSON(function(data)
+            {
+              socket.emit('updateupvotes', JSON.stringify(data));
+            });
+          });
+        }
+        else
+        {
+          console.log("Invalid Username.");
+        }
       }
     });
   });
