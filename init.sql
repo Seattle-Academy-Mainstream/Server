@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS mainstream;
 # You should replace "password" below with a real password
-GRANT SELECT, INSERT, UPDATE, DELETE ON mainstream.* TO mainstream@localhost IDENTIFIED BY 'password';
+GRANT SELECT, INSERT, UPDATE, DELETE, DROP ON mainstream.* TO mainstream@localhost IDENTIFIED BY 'password';
 
 FLUSH PRIVILEGES;
 
