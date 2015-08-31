@@ -54,10 +54,9 @@ var io = require('socket.io').listen(server);
 //reduce the log level
 io.set('log level', 1);
 
-
 //once the connection is established
 io.sockets.on('connection', function (socket) 
-{  
+{
   //the initial request
   socket.on('update', function (data)
   {
@@ -105,8 +104,6 @@ io.sockets.on('connection', function (socket)
   //this function can change anything about a post except upvotes
   socket.on('addpost', function (data, callback)
   {
-    callback();
-
     //add parse the JSON string
     var DataObject = JSON.parse(data);
 
@@ -118,6 +115,14 @@ io.sockets.on('connection', function (socket)
     TokenToUsername(DataObject["Author"], function(Data)
     {
       DataObject["Author"] = Data;
+
+      console.log(Data);
+
+      //if the token is expired and these was no author
+      if(DataObject.hasOwnProperty("Author") == 0)
+      {
+        callback("NoToken");
+      }
 
       if(DataObject["Author"].indexOf("@seattleacademy.org") != -1)
       {
