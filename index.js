@@ -123,17 +123,20 @@ io.sockets.on('connection', function (socket)
       {
         callback("NoToken");
       }
-
-      if(DataObject["Author"].indexOf("@seattleacademy.org") != -1)
-      {
-        SQL.AddPost(DataObject, function(Post)
-        {
-          console.log("A user added a post.");
-        });
-      }
+      //if the author actually exists
       else
       {
-        console.log("Invalid Username.");
+        if(DataObject["Author"].indexOf("@seattleacademy.org") != -1)
+        {
+          SQL.AddPost(DataObject, function(Post)
+          {
+            console.log("A user added a post.");
+          });
+        }
+        else
+        {
+          console.log("Invalid Username.");
+        }
       }
     });
   });
