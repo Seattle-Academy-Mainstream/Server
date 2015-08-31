@@ -26,10 +26,10 @@ exports.AddPost = function(DataObject, Callback)
     delete DataObject["Upvotes"];
   }
 
-  FormattedObject = {Image: DataObject["Image"], Content: DataObject["Content"], Author: DataObject["Author"], ID: DataObject["ID"], Category: DataObject["Category"]};
+  FormattedObject = {Timestamp: DataObject["Timestamp"], Image: DataObject["Image"], Content: DataObject["Content"], Author: DataObject["Author"], ID: DataObject["ID"], Category: DataObject["Category"]};
 
   //add the data to mysql
-  Database.query('INSERT INTO posts SET ?', FormattedObject, function(err, result) 
+  Database.query('INSERT INTO posts SET ?', FormattedObject, function(err, result)
   {
     //console.log("InsertID: " + result.insertId);
 

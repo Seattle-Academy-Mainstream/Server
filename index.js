@@ -44,10 +44,7 @@ function CurrentSQLTime()
   var date = new Date();
   date = date.getUTCFullYear() + '-' +
       ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
-      ('00' + date.getUTCDate()).slice(-2) + ' ' + 
-      ('00' + date.getUTCHours()).slice(-2) + ':' + 
-      ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
-      ('00' + date.getUTCSeconds()).slice(-2);
+      ('00' + date.getUTCDate()).slice(-2);
   console.log(date);
   return date;
 }
@@ -117,6 +114,7 @@ io.sockets.on('connection', function (socket)
     var DataObject = JSON.parse(data);
 
     //set the time
+    //this is hte format 2015-08-31 01:40:45
     DataObject["Timestamp"] = CurrentSQLTime();
 
     console.log(JSON.stringify(DataObject));
