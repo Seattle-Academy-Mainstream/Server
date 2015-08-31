@@ -43,10 +43,10 @@ exports.AddPost = function(DataObject, Callback)
 
 exports.DeleteAll = function(Callback)
 {
-  Database.query('TRUNCATE TABLE upvotes', function(err, result) 
+  Database.query('DELETE FROM upvotes', function(err, result) 
   {
     console.log(err);
-    Database.query('TRUNCATE TABLE posts', function(err2, result2) 
+    Database.query('DELETE FROM posts', function(err2, result2) 
     {
       console.log(err2);
       Callback();
