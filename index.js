@@ -26,7 +26,16 @@ function TokenToUsername(Token, Callback)
 {
   request("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + Token, function(error, response, body) 
   {
-    Callback(JSON.parse(body)["email"]);
+    var Data = JSON.parse(body);
+
+    if(Data.hasOwnProperty("error_description"))
+    {
+      Callback("", "NoToken");
+    }
+    else
+    { 
+      Callback(Data["email"], null);
+    }
   });
 }
 
@@ -112,15 +121,14 @@ io.sockets.on('connection', function (socket)
 
     console.log(JSON.stringify(DataObject));
  
-    TokenToUsername(DataObject["Author"], function(Data)
+    TokenToUsername(DataObject["Author"], function(Data, Error)
     {
       DataObject["Author"] = Data;
 
-      console.log(Data);
-
       //if the token is expired and these was an error
-      if(DataObject.hasOwnProperty("error_description"))
+      if(Error != null)
       {
+        console.log("The token was not valid.")
         callback("NoToken");
       }
       //if the author actually exists
