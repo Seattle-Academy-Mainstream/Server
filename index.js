@@ -46,6 +46,8 @@ function CurrentSQLTime()
   var Day = currentdate.getDate();
   var Year = currentdate.getFullYear();
 
+  console.log(currentdate);
+
   return Year + "-" + Month + "-" + Day;
 }
 
