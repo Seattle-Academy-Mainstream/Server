@@ -46,7 +46,7 @@ function CurrentSQLTime()
   var Day = currentdate.getDate();
   var Year = currentdate.getFullYear();
 
-  console.log(currentdate);
+  console.log(currentdate.toString());
 
   return Year + "-" + Month + "-" + Day;
 }
@@ -116,7 +116,7 @@ io.sockets.on('connection', function (socket)
     var DataObject = JSON.parse(data);
 
     //set the time
-    //this is hte format 2015-08-31 01:40:45
+    //this is the format 2015-08-31 01:40:45
     DataObject["Timestamp"] = CurrentSQLTime();
 
     console.log(JSON.stringify(DataObject));
