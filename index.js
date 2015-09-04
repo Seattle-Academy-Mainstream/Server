@@ -48,7 +48,10 @@ function CurrentSQLTime()
 
   console.log(currentdate.toString());
 
-  return Year + "-" + Month + "-" + Day;
+  //this lists the miliseconds of time, which makes comparison easy
+  var Milliseconds = (new Date).getTime();
+
+  return Year + "-" + Month + "-" + Day + "-" + Milliseconds;
 }
 
 
