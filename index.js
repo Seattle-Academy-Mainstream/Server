@@ -65,6 +65,19 @@ var io = require('socket.io').listen(server);
 //reduce the log level
 io.set('log level', 1);
 
+function CompareObjects(a,b) 
+{
+  var atimestamp = a["Timestamp"].split("-")[3];
+  var btimestamp = b["Timestamp"].split("-")[3];
+
+
+  if (atimestamp < btimestamp)
+    return -1;
+  if (atimestamp > btimestamp)
+    return 1;
+  return 0;
+}
+
 //once the connection is established
 io.sockets.on('connection', function (socket) 
 {
@@ -77,7 +90,8 @@ io.sockets.on('connection', function (socket)
     //send all data to client
     SQL.ToJSON(function(data)
     {
-      console.log(JSON.stringify(data));
+      data.sort(CompareObjects);
+      console.log(JSON.stringify(data))
       socket.emit('update', JSON.stringify(data));
     });
   });
