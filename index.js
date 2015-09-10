@@ -90,9 +90,12 @@ io.sockets.on('connection', function (socket)
     //send all data to client
     SQL.ToJSON(function(data)
     {
+      //we sort the list so that the newest items are first
       data.sort(CompareObjects);
-      console.log(JSON.stringify(data))
-      socket.emit('update', JSON.stringify(data));
+
+      var Recent = data.slice(0, 2);
+
+      socket.emit('update', JSON.stringify(Recent));
     });
   });
 
