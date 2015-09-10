@@ -93,7 +93,8 @@ io.sockets.on('connection', function (socket)
       //we sort the list so that the newest items are first
       data.sort(CompareObjects);
 
-      var Recent = data.slice(0, 2);
+      //only includes the most recent 25 posts
+      var Recent = data.slice(0, 25);
 
       socket.emit('update', JSON.stringify(Recent));
     });
