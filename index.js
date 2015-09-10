@@ -72,9 +72,9 @@ function CompareObjects(a,b)
 
 
   if (atimestamp < btimestamp)
-    return -1;
-  if (atimestamp > btimestamp)
     return 1;
+  if (atimestamp > btimestamp)
+    return -1;
   return 0;
 }
 
