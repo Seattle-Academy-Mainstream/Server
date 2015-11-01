@@ -129,6 +129,14 @@ io.sockets.on('connection', function (socket)
     });
   });
 
+  socket.on('checktoken', function (data, callback)
+  {
+    TokenToUsername(data, function(Author, Error)
+    {
+      callback(Error);
+    });
+  })
+
   //on update connection
   //this function can change anything about a post except upvotes
   socket.on('addpost', function (data, callback)
