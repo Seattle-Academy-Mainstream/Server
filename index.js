@@ -12,15 +12,15 @@ var fs = require('fs');
 var request = require('request');
 
 //program header that sets up the pid
-// fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
-//  function(err) 
-//  {
-//    if (err) throw err;
-//  }
-// );
+fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
+ function(err) 
+ {
+   if (err) throw err;
+ }
+);
 
-// process.setgid('mainstreamd');
-// process.setuid('mainstreamd');
+process.setgid('mainstreamd');
+process.setuid('mainstreamd');
 
 function TokenToUsername(Token, Callback)
 {
