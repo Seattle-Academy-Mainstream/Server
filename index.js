@@ -13,7 +13,7 @@ var request = require('request');
 
 //program header that sets up the pid
 fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
- function(err) 
+ function(err)
  {
    if (err) throw err;
  }
