@@ -19,8 +19,8 @@ fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
  }
 );
 
-process.setgid('mainstreamd');
-process.setuid('mainstreamd');
+//process.setgid('mainstreamd');
+//process.setuid('mainstreamd');
 
 function TokenToUsername(Token, Callback)
 {
