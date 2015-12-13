@@ -10,6 +10,7 @@ var SQL = require('./SQL.js');
 var Cropper = require('./cropper.js');
 var fs = require('fs');
 var request = require('request');
+var escape = require('escape-html');
 
 //program header that sets up the pid
 fs.writeFile('/run/mainstream.pid', process.pid, { mode: 0644 },
@@ -163,6 +164,14 @@ io.sockets.on('connection', function (socket)
       //if the author actually exists
       else
       {
+        //escape the data that we will be sending
+        DataObject["Content"] = escape(DataObject["Contnet"]);
+        DataObject["Upvotes"] = escape(DataObject["Upvotes"]);
+        DataObject["Author"] = escape(DataObject["Author"]);
+        DataObject["ID"] = escape(DataObject["ID"]);
+        DataObject["Category"] = escape(DataObject["Category"]);
+
+        //callback to the client without sending an error
         callback();
 
         if(DataObject["Author"].indexOf("@seattleacademy.org") != -1)
@@ -186,6 +195,8 @@ io.sockets.on('connection', function (socket)
     //parse it
     var DataObject = JSON.parse(data);
 
+    var html = escape('foo & bar');
+
     TokenToUsername(DataObject["User"], function(Data, Error)
     {
       DataObject["User"] = Data;
@@ -200,6 +211,10 @@ io.sockets.on('connection', function (socket)
       else
       {
         callback();
+
+        //escape the data that we will be sending
+        DataObject["User"] = escape(DataObject["User"]);
+        DataObject["ID"] = escape(DataObject["ID"]);
 
         if(DataObject["User"].indexOf("@seattleacademy.org") != -1)
         {

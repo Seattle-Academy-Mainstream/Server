@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.12.1",
     "socket.io": "^0.9.16",
-    "mysql": "^2.5.4"
+    "mysql": "^2.5.4",
+    "escape-html": "^1.0.3"
   },
 "repository": {
   "type": "git",
