@@ -175,7 +175,10 @@ io.sockets.on('connection', function (socket)
       {
         //escape the data that we will be sending
         DataObject["Content"] = Escape(DataObject["Content"]);
-        DataObject["Upvotes"] = Escape(DataObject["Upvotes"]);
+        for (i = 0; i < DataObject["Upvotes"]; i++)
+        {
+          DataObject["Upvotes"][i] = Escape(DataObject["Upvotes"][i]);
+        }
         DataObject["Author"] = Escape(DataObject["Author"]);
         DataObject["ID"] = Escape(DataObject["ID"]);
         DataObject["Category"] = Escape(DataObject["Category"]);
